@@ -1,5 +1,49 @@
-.duck {
-  display: block;
-  width: 120px;
-  margin: 1.5rem auto;
+@import '../../../styles/variables';
+
+.settings {
+  margin-top: 100px;
+  height: 100%;
+  h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: $grey-700;
+  }
+  .options {
+    margin-top: 16px;
+  }
+  .option-block {
+    vertical-align: top;
+    padding: 8px;
+    margin: 0 8px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
+    background-color: #fff;
+    border-radius: 2px;
+    @media (min-width: 500px) {
+      display: inline-block;
+      width: 30%;
+      max-width: 300px;
+    }
+    h3 {
+      font-size: 1rem;
+      margin: 0;
+      color: $grey-700;
+    }
+    select {
+      margin-top: 8px;
+      width: 100%;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid #7280ff;
+      padding: 4px 0;
+      font-size: 1rem;
+    }
+  }
+  .game-button {
+    margin-top: 16px;
+    .button {
+      min-width: 120px;
+      background-color: $light-blue-400;
+      color: #fff;
+    }
+  }
 }

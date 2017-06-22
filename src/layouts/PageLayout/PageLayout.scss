@@ -1,8 +1,12 @@
-.page-layout__viewport {
-  padding-top: 4rem;
+@import '../../styles/variables';
+
+.container {
+  background-color: $grey-50;
 }
 
-.page-layout__nav-item--active {
-  font-weight: bold;
-  text-decoration: underline;
+h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: $grey-800;
+  padding: 8px 0;
 }

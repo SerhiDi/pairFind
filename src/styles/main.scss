@@ -1,5 +1,7 @@
 @import 'base';
-@import '~bootstrap/scss/bootstrap.scss';
+@import 'variables';
+//@import '~bootstrap/scss/bootstrap.scss';
+@import '~normalize.css';
 
 // Some best-practice CSS that's useful for most apps
 // Just remove them if they're not what you want
@@ -19,3 +21,25 @@ body {
 *:after {
   box-sizing: inherit;
 }
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  outline: none;
+}
+
+#root, #root > div {
+  height: 100%;
+}
+
+.container {
+  text-align: center;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+
