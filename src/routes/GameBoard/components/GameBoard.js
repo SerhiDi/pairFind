@@ -160,8 +160,8 @@ class GameBoard extends Component {
             this.cells.map((cell, i) => {
               return (
                 <li key={i} className={(cell.complete ? 'opacity' : '') + ' cell'}>
-                  {cell.show ? (<img src={require('../assets/' + cell.index + '.jpg')} alt="image"/>) :
-                    (<img src={QuestionMark} alt="question mark" onClick={this.clickOnCell.bind(this, cell)}/>)}
+                  {cell.show ? (<img src={require('../assets/' + cell.index + '.jpg')} alt="image" draggable="false"/>) :
+                    (<img src={QuestionMark} alt="question mark" onClick={this.clickOnCell.bind(this, cell)} draggable="false"/>)}
                 </li>
               );
             })
