@@ -1,6 +1,5 @@
 @import 'base';
 @import 'variables';
-//@import '~bootstrap/scss/bootstrap.scss';
 @import '~normalize.css';
 
 // Some best-practice CSS that's useful for most apps
@@ -36,9 +35,14 @@ a {
   height: 100%;
 }
 
+#root {
+  background-color: $grey-50;
+}
+
 .container {
   text-align: center;
   max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
 }
