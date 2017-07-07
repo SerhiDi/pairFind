@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class App extends React.Component {
-  static propTypes = {
-    store: PropTypes.object.isRequired,
-    routes: PropTypes.object.isRequired,
-  };
+  // static propTypes = {
+  //   store: PropTypes.object.isRequired,
+  //   routes: PropTypes.object.isRequired,
+  // };
 
   componentWillMount() {
     browserHistory.push('/');
@@ -21,5 +21,10 @@ class App extends React.Component {
     );
   }
 }
+
+App.propTypes = {
+  store: PropTypes.object.isRequired,
+  routes: PropTypes.object.isRequired,
+};
 
 export default App;

@@ -31,19 +31,22 @@ export const actions = {
 
 const ACTION_HANDLERS = {
   [SET_GAME_TIME]: (state, action) => {
-    return Object.assign({}, state, {
+    return {
+      ...state,
       gameTime: +action.payload
-    });
+    };
   },
   [SET_HINT_TIME]: (state, action) => {
-    return Object.assign({}, state, {
+    return {
+      ...state,
       hintTime: +action.payload
-    });
+    };
   },
   [SET_BOARD_SIZE]: (state, action) => {
-    return Object.assign({}, state, {
+    return {
+      ...state,
       boardSize: +action.payload
-    });
+    };
   }
 };
 

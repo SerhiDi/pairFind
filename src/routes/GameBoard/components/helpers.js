@@ -1,6 +1,3 @@
-export const apiUrl = 'https://unsplash.it/200/200?image=';
-
-//images min max values(photo service parameters)
 const IMAGE_MAX_INDEX = 50;
 
 let createImagesArray = (arrayLength) => {
@@ -31,15 +28,9 @@ export const createCells = (cellsCount) => {
 };
 
 export const getBoardWidth = (size) => {
-  if (size === 16) {
-    return 'cells-4';
-  } else if (size === 36) {
-    return 'cells-6';
-  } else if (size === 64) {
-    return 'cells-8';
-  }
+  return 'cells-' + Math.sqrt(size);
 };
 
 export const checkWin = (array) => {
-  return array.every((elem)=> elem.complete === true);
+  return array.every((elem) => elem.complete === true);
 };

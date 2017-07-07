@@ -1,6 +1,7 @@
 import CoreLayout from '../layouts/PageLayout/PageLayout';
 import Home from './Home';
 import GameBoard from './GameBoard';
+import Cell from './GameBoard/components/Cell/Cell';
 import LosePage from './Lose';
 import WinPage from './Win';
 
@@ -11,7 +12,7 @@ export const createRoutes = (store) => ({
   childRoutes: [
     GameBoard(store),
     LosePage(store),
-    WinPage(store)
+    WinPage(store),
   ]
 });
 

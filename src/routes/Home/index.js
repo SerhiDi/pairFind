@@ -1,10 +1,3 @@
-// import HomeView from './components/HomeView'
-//
-// // Sync route definition
-// export default {
-//   component : HomeView
-// }
-
 import { injectReducer } from '../../store/reducers';
 
 export default (store) => ({
@@ -13,7 +6,7 @@ export default (store) => ({
       const HomeView = require('./containers/HomeViewContainer').default;
       const reducer = require('./modules/homeView').default;
       injectReducer(store, {
-        key: 'home',
+        key: 'settings',
         reducer
       });
       cb(null, HomeView);

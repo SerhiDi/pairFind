@@ -9,7 +9,8 @@ class HomeView extends Component {
   }
 
   render() {
-    const {boardSize, gameTime, hintTime} = this.props.home;
+    const {boardSize, gameTime, hintTime} = this.props.settings;
+
     return (
       <div className="settings">
         <h2>Remember the location of pictures and find all pairs</h2>
@@ -62,7 +63,7 @@ HomeView.propTypes = {
   setGameTime: PropTypes.func,
   setHintTime: PropTypes.func,
   setBoardSize: PropTypes.func,
-  home: PropTypes.shape({
+  settings: PropTypes.shape({
     boardSize: PropTypes.number,
     gameTime: PropTypes.number,
     hintTime: PropTypes.number

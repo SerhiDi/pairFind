@@ -1,5 +1,9 @@
 import { connect } from 'react-redux';
-import { setGameTime, setHintTime, setBoardSize } from '../modules/homeView';
+import {
+  setGameTime,
+  setHintTime,
+  setBoardSize
+} from '../modules/homeView';
 import HomeView from '../components/HomeView';
 
 const mapDispatchToProps = {
@@ -9,7 +13,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
-  home: state.home
+  settings: state.settings
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeView);
