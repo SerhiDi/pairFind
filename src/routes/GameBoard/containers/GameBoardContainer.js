@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import GameBoard from '../components/GameBoard';
-import { createCells, getBoardWidth } from '../modules/gameBoard';
+import { createCells, getBoardWidth, showAllImages } from '../modules/gameBoard';
 
 const mapStateToProps = (state) => ({
   settings: state.settings,
@@ -11,6 +11,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   createCells,
   getBoardWidth,
+  showAllImages
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBoard);

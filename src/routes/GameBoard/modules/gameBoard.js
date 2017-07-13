@@ -51,7 +51,6 @@ const ACTION_HANDLERS = {
     return {
       ...state,
       cells: state.cells.map((cell, i) => {
-        console.log(cell);
         if (i === action.payload.index) {
           return ({
             ...cell,
@@ -163,8 +162,11 @@ export const clickOnCell = (cell, index) => (dispatch, getState) => {
   }
 };
 
-export const showAllImages = (index, value) => (dispatch) => {
+export const showAllImages = (value) => (dispatch, getState) => {
+  let cells = getState().gameboard.cells;
+  cells.forEach((cell, index) => {
     dispatch(updateCell(index, value));
+  });
 };
 
 const checkWin = () => (dispatch, getState) => {

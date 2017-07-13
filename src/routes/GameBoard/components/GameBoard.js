@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import soundFile from '../../../audio/click.mp3';
 import LinkButton from '../../../components/LinkButton/LinkButton';
 import Cell from './Cell/Cell';
-import { formatSeconds, showAllImages } from '../modules/gameBoard';
+import { formatSeconds } from '../modules/gameBoard';
 
 class GameBoard extends Component {
   constructor(props) {
@@ -13,7 +13,6 @@ class GameBoard extends Component {
       countdown: this.props.settings.gameTime,
       hintTime: this.props.settings.hintTime
     };
-
   }
 
   componentWillMount() {
@@ -52,16 +51,13 @@ class GameBoard extends Component {
     this.hintTimer = setInterval(() => {
       this.setState({hintTime: this.state.hintTime - 1});
     }, 1000);
-    this.props.cells.forEach(() => {
-      showAllImages(index, true);
-    });
+
+      this.props.showAllImages(true);
   }
 
   hideHint() {
     clearInterval(this.hintTimer);
-    this.props.cells.forEach((c, index) => {
-      showAllImages(index, false);
-    });
+    this.props.showAllImages(false);
   }
 
   render() {
@@ -74,13 +70,12 @@ class GameBoard extends Component {
           <div className="info-block">
             <h3>Clicks:</h3> {this.props.clicks}
           </div>
-        </div>
 
         {this.state.countdown <= 10 ? (<p className="hurry-up">Hurry up!</p>) :
           this.state.hintTime > 0 ? <p className="hint-time">{this.state.hintTime}</p> :
             this.state.hintTime === 0 ? <p className="hint-time">Go!</p> :
               <p className="hint-time">&nbsp;</p> }
-
+      </div>
         <ul className={('cells-' + Math.sqrt(this.props.settings.boardSize)) + ' cells'}>
           {
             this.props.cells.map((cell, i) => {

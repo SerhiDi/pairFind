@@ -1,8 +1,10 @@
 @import '../../../styles/variables';
 
 .settings {
-  margin-top: 100px;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   h2 {
     margin: 0;
     font-size: 1.2rem;
@@ -40,7 +42,7 @@
     }
   }
   .game-button {
-    margin-top: 16px;
+    margin-bottom: 180px;
     .button {
       min-width: 120px;
       background-color: $light-blue-400;
