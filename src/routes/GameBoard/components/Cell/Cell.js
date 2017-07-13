@@ -8,17 +8,17 @@ import PropTypes from 'prop-types';
 class Cell extends Component {
 
   render() {
-    console.log(this.props);
-    const cell = this.props.cell;
+    const { cell, index } = this.props;
 
     return (
       <li className={(cell.complete ? 'opacity' : '') + ' cell'}>
         {cell.show ? (
           <img src={require('./assets/' + cell.index + '.jpg')} alt="image" draggable="false"/>) :
           (<img src={QuestionMark} alt="question mark" onClick={() => {
-              this.props.clickOnCell(cell)
+              this.props.clickOnCell(cell, index)
             }} draggable="false"/>
           )}
+        {cell.index}
       </li>
     )
   }

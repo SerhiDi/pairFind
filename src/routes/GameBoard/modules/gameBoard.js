@@ -1,6 +1,7 @@
 export const CREATE_CELLS = 'CREATE_CELLS';
 export const ADD_CLICK = 'ADD_CLICK';
 export const UPDATE_CELL = 'UPDATE_CELL';
+export const COMPLETE_CELLS = 'COMPLETE_CELLS';
 
 export const createCells = (value) => {
   return {
@@ -8,6 +9,30 @@ export const createCells = (value) => {
     payload: value
   };
 };
+
+export const updateCell = (index, value) => {
+  return {
+    type: UPDATE_CELL,
+    payload: {
+      index: index,
+      value: value
+    }
+  };
+};
+
+export const completeCells = (index) => {
+  return {
+    type: COMPLETE_CELLS,
+    payload: index
+  };
+};
+
+export const addClick = () => {
+  return {
+    type: ADD_CLICK
+  };
+};
+
 
 const ACTION_HANDLERS = {
   [CREATE_CELLS]: (state, action) => {
@@ -25,7 +50,32 @@ const ACTION_HANDLERS = {
   [UPDATE_CELL]: (state, action) => {
     return {
       ...state,
-      clicks: state.clicks + 1
+      cells: state.cells.map((cell, i) => {
+        console.log(cell);
+        if (i === action.payload.index) {
+          return ({
+            ...cell,
+            show: action.payload.value
+          })
+        } else {
+          return cell;
+        }
+      })
+    };
+  },
+  [COMPLETE_CELLS]: (state, action) => {
+    return {
+      ...state,
+      cells: state.cells.map((cell, i) => {
+        if (i === action.payload) {
+          return ({
+            ...cell,
+            complete: true
+          })
+        } else {
+          return cell;
+        }
+      })
     };
   }
 };
@@ -42,8 +92,8 @@ export default function gameboardReducer(state = initialState, action) {
 
 //additional functions
 
-this.audio = new Audio(soundFile);
 import soundFile from '../../../audio/click.mp3';
+const audio = new Audio(soundFile);
 const IMAGE_MAX_INDEX = 50;
 
 let createImagesArray = (arrayLength) => {
@@ -57,6 +107,7 @@ let createImagesArray = (arrayLength) => {
       return {
         index: imagesIndexes.splice(randomElem, 1)[0],
         show: false,
+        complete: false,
         pairFind: false
       };
     });
@@ -73,51 +124,57 @@ const createCellsArray = (cellsCount) => {
   });
 };
 
-export const checkWin = (array) => {
-  return array.every((elem) => elem.complete === true);
-};
+let firstSelectedCell = false;
+let secondSelectedCell = false;
 
-export const clickOnCell = (cell) => (dispatch, getState) => {
-  this.audio.play();
-  dispatch({type: 'ADD_CLICK'});
+export const clickOnCell = (cell, index) => (dispatch, getState) => {
+  audio.play();
+  dispatch(addClick());
+  dispatch(updateCell(index, true));
+  let cells = getState().gameboard.cells;
 
-  // cell.show = true;
-
-  if (!this.firstSelectedCell) {
-    this.firstSelectedCell = cell.index;
+  if (!firstSelectedCell) {
+    firstSelectedCell = cell.index
   } else {
-    this.secondSelectedCell = cell.index;
+    secondSelectedCell = cell.index;
   }
 
-  if (this.firstSelectedCell && this.secondSelectedCell) {
-    if (this.firstSelectedCell === this.secondSelectedCell) {
-      this.state.cells.forEach((cell) => {
-        if (cell.index === this.firstSelectedCell && this.secondSelectedCell) {
-          cell.complete = true;
+  if (firstSelectedCell && secondSelectedCell) {
+    if (firstSelectedCell === secondSelectedCell) {
+      cells.forEach((cell, index) => {
+        if (cell.index === firstSelectedCell && secondSelectedCell) {
+          dispatch(completeCells(index));
         }
       });
 
-      this.win();
+      dispatch(checkWin());
 
     } else {
       setTimeout(() => {
-        this.state.cells.forEach((cell) => {
+        cells.forEach((cell, index) => {
           if (!cell.complete) {
-            cell.show = false;
+            dispatch(updateCell(index, false));
           }
         });
       }, 300);
     }
-    this.firstSelectedCell = null;
-    this.secondSelectedCell = null;
+    firstSelectedCell = null;
+    secondSelectedCell = null;
   }
 };
 
+export const showAllImages = (index, value) => (dispatch) => {
+    dispatch(updateCell(index, value));
+};
 
-export const win = () => {
-  let allComplete = checkWin(this.state.cells);
+const checkWin = () => (dispatch, getState) => {
+  let cells = getState().gameboard.cells;
+
+  let allComplete = cells.every((elem) => elem.complete === true);
+
   if (allComplete) {
     clearInterval(this.countdownTimer);
+
     setTimeout(() => {
       browserHistory.push({
         pathname: 'winPage',
@@ -130,8 +187,9 @@ export const win = () => {
   }
 };
 
+
 export const gameOver = () => {
-  clearInterval(this.countdownTimer);
+  clearInterval(countdownTimer);
   browserHistory.push({
     pathname: 'losePage',
     state: {
@@ -145,4 +203,3 @@ export const formatSeconds = (seconds) => {
   seconds = seconds % 60;
   return (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 };
-
