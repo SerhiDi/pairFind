@@ -15,6 +15,7 @@ class GameBoard extends Component {
   }
 
   componentWillMount() {
+    this.props.resetGame();
     const {boardSize} = this.props.settings;
     this.props.createCells(boardSize);
     this.showHint();

@@ -3,9 +3,11 @@ export const ADD_CLICK = 'ADD_CLICK';
 export const UPDATE_CELL = 'UPDATE_CELL';
 export const COMPLETE_CELLS = 'COMPLETE_CELLS';
 export const GAME_OVER = 'GAME_OVER';
+export const RESET_GAME = 'RESET_GAME';
 export const UPDATE_GAMETIME = 'UPDATE_GAMETIME';
 
 import { browserHistory } from 'react-router';
+import { createCellsArray } from '../../helpers';
 
 export const createCells = (value) => {
   return {
@@ -48,6 +50,12 @@ export const gameOver = (result) => {
   return {
     type: GAME_OVER,
     result: result
+  };
+};
+
+export const resetGame = () => {
+  return {
+    type: RESET_GAME
   };
 };
 
@@ -100,6 +108,7 @@ const ACTION_HANDLERS = {
       gameResult: action.result
     };
   },
+  [RESET_GAME]: (state, action) => initialState,
   [UPDATE_GAMETIME]: (state, action) => {
     return {
       ...state,
@@ -121,36 +130,6 @@ export default function gameboardReducer(state = initialState, action) {
 }
 
 // additional functions
-
-const IMAGE_MAX_INDEX = 50;
-
-let createImagesArray = (arrayLength) => {
-  const imagesIndexes = [...new Array(IMAGE_MAX_INDEX)].map((_, i) => {
-    return i + 1;
-  });
-
-  return [...new Array(arrayLength)]
-    .map(() => {
-      let randomElem = Math.floor(Math.random() * imagesIndexes.length);
-      return {
-        index: imagesIndexes.splice(randomElem, 1)[0],
-        show: false,
-        complete: false,
-        pairFind: false
-      };
-    });
-};
-
-const createCellsArray = (cellsCount) => {
-  let randomImagesArray = createImagesArray(cellsCount / 2);
-  let copyArray = JSON.parse(JSON.stringify(randomImagesArray));
-  let doubleArray = randomImagesArray.concat(copyArray);
-
-  return [...new Array(cellsCount)].map(() => {
-    let randomElem = Math.floor(Math.random() * doubleArray.length);
-    return doubleArray.splice(randomElem, 1)[0];
-  });
-};
 
 let firstSelectedCell = false;
 let secondSelectedCell = false;

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import GameBoard from '../components/GameBoard';
-import { createCells, showAllImages, openResultPage, updateGameTime } from '../modules/gameBoard';
+import { createCells, showAllImages, openResultPage, updateGameTime, resetGame } from '../modules/gameBoard';
 
 const mapStateToProps = (state) => ({
   settings: state.settings,
@@ -12,7 +12,8 @@ const mapDispatchToProps = {
   createCells,
   showAllImages,
   updateGameTime,
-  openResultPage
+  openResultPage,
+  resetGame
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBoard);
