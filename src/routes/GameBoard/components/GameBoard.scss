@@ -2,9 +2,6 @@
 
 .game-board {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   .info {
 
     .info-block {
@@ -19,8 +16,8 @@
     }
   }
   .hurry-up {
-    font-size: 1.5rem;
-    line-height: 2rem;
+    font-size: 2.5rem;
+    line-height: 6rem;
     margin: 0;
     color: $red-600;
     font-weight: bold;
@@ -28,8 +25,8 @@
     animation: pulse 0.7s infinite;
   }
   .hint-time {
-    font-size: 1.5rem;
-    line-height: 2rem;
+    font-size: 2.5rem;
+    line-height: 6rem;
     margin: 0;
     color: $light-green-600;
   }
@@ -49,7 +46,7 @@
 
 .cells {
   user-select: none;
-  margin: 8px auto 0;
+  margin: 16px auto;
   &.cells-4 {
     max-width: 400px;
     max-height: 400px;
@@ -81,33 +78,24 @@
     cursor: pointer;
     overflow: hidden;
     margin: 1px;
-    border-radius: 2px;
     position: relative;
+    transition: all 0.2s ease;
     &.opacity {
       opacity: 0.5;
     }
     &:hover {
-      background-color: #efefef;
-      border-color: #6075ac;
+      background-color: $grey-400;
+      border-color:  $light-blue-400;
     }
     img {
       max-width: 100%;
       vertical-align: middle;
     }
-    .emptyImage {
-      background-color: $grey-700;
-      display: inline-block;
-      width: 100%;
-      height: 100%;
-      &:hover {
-        background-color: $grey-800;
-      }
-    }
   }
 }
 
 .cancel-game {
-  margin-top: 16px;
+  margin-top: 120px;
   .button {
     min-width: 120px;
     background-color: $red-600;

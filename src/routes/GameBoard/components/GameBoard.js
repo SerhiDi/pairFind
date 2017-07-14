@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import './GameBoard.scss';
 import PropTypes from 'prop-types';
-import soundFile from '../../../audio/click.mp3';
 import LinkButton from '../../../components/LinkButton/LinkButton';
 import Cell from './Cell/Cell';
-import { formatSeconds } from '../modules/gameBoard';
+import { formatSeconds } from '../../helpers';
 
 class GameBoard extends Component {
   constructor(props) {
@@ -18,13 +17,11 @@ class GameBoard extends Component {
   componentWillMount() {
     const {boardSize} = this.props.settings;
     this.props.createCells(boardSize);
-    // this.audio = new Audio(soundFile);
     this.showHint();
   }
 
   componentDidMount() {
     this.hintTimeout = setTimeout(() => {
-      console.log('time');
       this.hideHint();
       this.runTimer();
     }, (this.props.settings.hintTime + 1) * 1000);
@@ -34,9 +31,11 @@ class GameBoard extends Component {
     this.setState({hintTime: null});
     this.countdownTimer = setInterval(() => {
       if (this.state.countdown === 0) {
-        // this.gameOver();
+        clearInterval(this.countdownTimer);
+        this.props.openResultPage('lose');
       } else {
         this.setState({countdown: this.state.countdown - 1});
+        this.props.updateGameTime(this.props.settings.gameTime - this.state.countdown)
       }
     }, 1000);
   }
@@ -51,8 +50,7 @@ class GameBoard extends Component {
     this.hintTimer = setInterval(() => {
       this.setState({hintTime: this.state.hintTime - 1});
     }, 1000);
-
-      this.props.showAllImages(true);
+    this.props.showAllImages(true);
   }
 
   hideHint() {
@@ -71,11 +69,15 @@ class GameBoard extends Component {
             <h3>Clicks:</h3> {this.props.clicks}
           </div>
 
-        {this.state.countdown <= 10 ? (<p className="hurry-up">Hurry up!</p>) :
-          this.state.hintTime > 0 ? <p className="hint-time">{this.state.hintTime}</p> :
-            this.state.hintTime === 0 ? <p className="hint-time">Go!</p> :
-              <p className="hint-time">&nbsp;</p> }
-      </div>
+          <div>
+            {this.state.countdown <= 10 ? (<p className="hurry-up">Hurry up!</p>) :
+              this.state.hintTime > 0 ? <p className="hint-time">{this.state.hintTime}</p> :
+                this.state.hintTime === 0 ? <p className="hint-time">Go!</p> :
+                  <p className="hint-time">&nbsp;</p> }
+          </div>
+
+        </div>
+
         <ul className={('cells-' + Math.sqrt(this.props.settings.boardSize)) + ' cells'}>
           {
             this.props.cells.map((cell, i) => {
@@ -101,7 +103,6 @@ GameBoard.propTypes = {
     gameTime: PropTypes.number,
     hintTime: PropTypes.number
   }),
-  clickOnCell: PropTypes.func,
   clicks: PropTypes.number
 };
 

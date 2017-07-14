@@ -2,6 +2,10 @@ export const CREATE_CELLS = 'CREATE_CELLS';
 export const ADD_CLICK = 'ADD_CLICK';
 export const UPDATE_CELL = 'UPDATE_CELL';
 export const COMPLETE_CELLS = 'COMPLETE_CELLS';
+export const GAME_OVER = 'GAME_OVER';
+export const UPDATE_GAMETIME = 'UPDATE_GAMETIME';
+
+import { browserHistory } from 'react-router';
 
 export const createCells = (value) => {
   return {
@@ -33,6 +37,19 @@ export const addClick = () => {
   };
 };
 
+export const updateGameTime = (time) => {
+  return {
+    type: UPDATE_GAMETIME,
+    time: time
+  };
+};
+
+export const gameOver = (result) => {
+  return {
+    type: GAME_OVER,
+    result: result
+  };
+};
 
 const ACTION_HANDLERS = {
   [CREATE_CELLS]: (state, action) => {
@@ -76,12 +93,26 @@ const ACTION_HANDLERS = {
         }
       })
     };
+  },
+  [GAME_OVER]: (state, action) => {
+    return {
+      ...state,
+      gameResult: action.result
+    };
+  },
+  [UPDATE_GAMETIME]: (state, action) => {
+    return {
+      ...state,
+      gameTime: action.time
+    };
   }
 };
 
 const initialState = {
   cells: [],
-  clicks: 0
+  clicks: 0,
+  gameTime: null,
+  gameResult: null
 };
 
 export default function gameboardReducer(state = initialState, action) {
@@ -89,10 +120,8 @@ export default function gameboardReducer(state = initialState, action) {
   return handler ? handler(state, action) : state;
 }
 
-//additional functions
+// additional functions
 
-import soundFile from '../../../audio/click.mp3';
-const audio = new Audio(soundFile);
 const IMAGE_MAX_INDEX = 50;
 
 let createImagesArray = (arrayLength) => {
@@ -127,7 +156,6 @@ let firstSelectedCell = false;
 let secondSelectedCell = false;
 
 export const clickOnCell = (cell, index) => (dispatch, getState) => {
-  audio.play();
   dispatch(addClick());
   dispatch(updateCell(index, true));
   let cells = getState().gameboard.cells;
@@ -145,7 +173,6 @@ export const clickOnCell = (cell, index) => (dispatch, getState) => {
           dispatch(completeCells(index));
         }
       });
-
       dispatch(checkWin());
 
     } else {
@@ -171,37 +198,19 @@ export const showAllImages = (value) => (dispatch, getState) => {
 
 const checkWin = () => (dispatch, getState) => {
   let cells = getState().gameboard.cells;
-
   let allComplete = cells.every((elem) => elem.complete === true);
-
   if (allComplete) {
-    clearInterval(this.countdownTimer);
-
-    setTimeout(() => {
-      browserHistory.push({
-        pathname: 'winPage',
-        state: {
-          clicks: this.state.clicks,
-          time: this.props.home.gameTime - this.state.countdown
-        }
-      });
-    }, 500);
+    dispatch(openResultPage('win'));
   }
 };
 
-
-export const gameOver = () => {
-  clearInterval(countdownTimer);
+export const openResultPage = (result) => (dispatch) => {
+  if (result === 'win') {
+    dispatch(gameOver('win'))
+  } else if (result === 'lose') {
+    dispatch(gameOver('lose'))
+  }
   browserHistory.push({
-    pathname: 'losePage',
-    state: {
-      clicks: this.state.clicks
-    }
+    pathname: 'resultPage'
   });
-};
-
-export const formatSeconds = (seconds) => {
-  let minutes = Math.floor(seconds / 60);
-  seconds = seconds % 60;
-  return (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 };

@@ -1,18 +1,27 @@
 @import '../../../styles/variables';
 
 .result-page {
+  height: 100%;
+  padding: 16px;
+
   h2 {
     font-size: 4rem;
-    color: $light-green-600;
     text-transform: uppercase;
     margin: 32px 0 0;
+    &.win {
+      color: $light-green-600;
+    }
+    &.lose {
+      color: $red-600;
+    }
   }
 
   .info {
-    margin-top: 16px;
+    margin-top: 72px;
     font-size: 1.2rem;
     display: inline-block;
-    width: 280px;
+    width: 100%;
+    max-width: 320px;
     text-align: left;
     & > div {
       display: flex;
@@ -32,6 +41,7 @@
   }
 
   .buttons {
-    margin-top: 16px;
+    max-width: 320px;
+    margin: 72px auto 0;
   }
 }

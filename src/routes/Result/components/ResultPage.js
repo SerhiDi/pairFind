@@ -1,32 +1,36 @@
 import React, { Component } from 'react';
 import './ResultPage.scss';
 import LinkButton from '../../../components/LinkButton/LinkButton';
+import { formatSeconds } from '../../helpers';
 
 class ResultPage extends Component {
-
-  formatSeconds(seconds) {
-    let minutes = Math.floor(seconds / 60);
-    seconds = seconds % 60;
-    return (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
-  }
 
   render() {
     return (
       <div className="result-page">
-        <h2>You Win</h2>
+        {
+          this.props.gameResult === 'win' ?
+            <h2 className="win">You Win</h2> :
+            <h2 className="lose">You Lose</h2>
+        }
         <div className="info">
           <div>
             <h3>Clicks count:</h3>
-            <p>{this.props.location.state.clicks}</p>
+            <p>{this.props.clicks}</p>
           </div>
-          <div>
-            <h3>Time:</h3>
-            <p>{this.formatSeconds(this.props.location.state.time)}</p>
-          </div>
+
+          {
+            this.props.gameResult === 'win' ?
+              <div>
+                <h3>Time:</h3>
+                <p>{formatSeconds(this.props.gameTime)}</p>
+              </div> : ''
+          }
+
         </div>
 
         <div className="buttons">
-          <LinkButton text='Select hardest level' to='/'/>
+          <LinkButton text='Change game options' to='/'/>
           <LinkButton text='Try again' to='gameBoard'/>
         </div>
 
